@@ -1,0 +1,8 @@
+.env
+out/
+__pycache__/
+*.pyc
+.venv/
+meridian-ai-challenge/
+meridian-ai-challenge/
+meridian-ai-challenge/

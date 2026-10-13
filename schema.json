@@ -1,0 +1,133 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/meridian-proposal.schema.json",
+  "title": "Meridian Wealth investment proposal",
+  "description": "The object passed to window.loadProposal(). Every field is optional; anything omitted keeps its default. Numeric money/percent values are strings without thousands separators (e.g. \"8500000\", \"0.75\").",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "clientName": { "type": "string" },
+    "clientEmail": { "type": "string" },
+    "introGreetTo": { "type": "string", "enum": ["client", "advisor"], "default": "client" },
+    "applyModel": {
+      "type": "string",
+      "description": "Convenience: a model ID to hydrate allocation, composition, fees and the objective preset. Not stored on the proposal.",
+      "examples": ["balanced", "global-growth", "income"]
+    },
+    "introduction": { "type": "string" },
+    "needs": { "type": "string" },
+    "about": { "type": "string" },
+    "process": { "type": "string" },
+    "status": { "type": "string", "enum": ["draft", "complete"], "default": "draft" },
+
+    "goalAssessment": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "clientType": { "type": "string" },
+        "mandateType": { "type": "string" },
+        "wrapper": { "type": "string" },
+        "currency": { "type": "string", "examples": ["ZAR", "USD", "GBP", "EUR"] },
+        "portfolioModel": { "type": "string" },
+        "investmentStrategy": { "type": "string" },
+        "rationale": { "type": "string" },
+        "strategyBullets": { "type": "string" },
+        "keyFigures": { "$ref": "#/definitions/keyFigures" }
+      }
+    },
+
+    "objective": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "targetReturn": { "type": "string" },
+        "benchmark": { "type": "string" },
+        "riskProfile": { "type": "string" },
+        "strategyChars": { "type": "string" },
+        "investmentHorizon": { "type": "string" }
+      }
+    },
+
+    "strategy": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "model": { "type": "string" },
+        "portfolioName": { "type": "string" },
+        "currency": { "type": "string" },
+        "composition": { "type": "string" },
+        "rationale": { "type": "string" },
+        "allocation": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["class", "percent"],
+            "properties": {
+              "class": { "type": "string" },
+              "key": { "type": "string", "enum": ["sa-equity", "intl-equity", "fixed-interest", "bonds", "property", "cash", "other"] },
+              "percent": { "type": "number", "minimum": 0, "maximum": 100 }
+            }
+          }
+        },
+        "keyFigures": { "$ref": "#/definitions/keyFigures" }
+      }
+    },
+
+    "fees": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "management": { "type": "string" },
+        "advisorFee": { "type": "string" },
+        "adminFee": { "type": "string" },
+        "brokerage": { "type": "string" }
+      }
+    },
+
+    "holdings": {
+      "type": "object",
+      "properties": {
+        "text": { "type": "string" },
+        "rows": { "type": "array" }
+      }
+    },
+
+    "replacements": {
+      "type": "object",
+      "properties": {
+        "isReplacement": { "type": "boolean" },
+        "details": { "type": "string" }
+      }
+    },
+
+    "portfolioManagers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "title": { "type": "string" },
+          "email": { "type": "string" },
+          "phone": { "type": "string" }
+        }
+      }
+    }
+  },
+
+  "definitions": {
+    "keyFigures": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "totalInvestment": { "type": "string" },
+        "portfolioValue": { "type": "string" },
+        "portfolioPct": { "type": "string" },
+        "platformName": { "type": "string" },
+        "platformValue": { "type": "string" },
+        "platformPct": { "type": "string" },
+        "incomeValue": { "type": "string" },
+        "incomePct": { "type": "string" }
+      }
+    }
+  }
+}
